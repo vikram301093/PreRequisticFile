@@ -1,0 +1,37 @@
+#installing Prerequisite before running playbook
+---
+- hosts: all
+  tasks:
+    - name: update yum repo
+      command: yum update -y
+    - name: install wget
+      yum:
+        name: wget
+        state: present
+    - name: enable aws epel
+      command: yum-config-manager --enable rhui-REGION-rhel-server-extras -y
+    - name: enable fedora epel
+      command: wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - name: install fedora epel
+      command: rpm -ivh epel-release-latest-7.noarch.rpm
+    - name: install docker
+      yum: 
+        name: docker
+        state: present
+    - name: Starting the Docker service
+      service:
+        name: docker
+        enabled: yes
+        state: started
+    - name: Checking if pip is installed
+      yum:
+        name: python-pip
+        state: present
+        disable_gpg_check: yes
+
+    - command: pip install --upgrade pip
+
+    - name: Installing Docker Compose
+      pip:
+        name: docker-compose
+    
