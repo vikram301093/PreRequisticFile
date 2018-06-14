@@ -9,11 +9,11 @@
         name: wget
         state: present
     - name: enable aws epel
-      command: yum-config-manager --enable rhui-REGION-rhel-server-extras -y
+      shell: yum-config-manager --enable rhui-REGION-rhel-server-extras -y
     - name: enable fedora epel
-      command: wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      shell: wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     - name: install fedora epel
-      command: rpm -ivh epel-release-latest-7.noarch.rpm
+      shell: rpm -ivh epel-release-latest-7.noarch.rpm
     - name: install docker
       yum: 
         name: docker
@@ -28,8 +28,6 @@
         name: python-pip
         state: present
         disable_gpg_check: yes
-
-    - command: pip install --upgrade pip
 
     - name: Installing Docker Compose
       pip:
